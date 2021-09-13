@@ -5,4 +5,4 @@
 
 **Применимость:** там где требуется гибкость для создания продуктов.
 
-<a href='#'>Пример</a>
+<a href='https://github.com/isys35/hints/blob/master/patterns/codes/factory_method.py'>Пример</a>
