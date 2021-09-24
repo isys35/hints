@@ -46,3 +46,6 @@ class Clock extends React.Component {
   }
 }
 ```
+<hr>
+
+
