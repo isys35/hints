@@ -16,3 +16,14 @@ crontab -r
 ```shell
 crontab -u user
 ```
+
+Пример cron файла:
+```text
+# m h  dom mon dow   command
+
+*/5 13 * * * /var/bot/venv/bin/python /var/bot/script.py
+
+
+В 13 часов раз в пять минут выполняется скрипт script.py
+```
+
