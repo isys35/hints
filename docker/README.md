@@ -12,7 +12,7 @@ docker images
 docker run <image_name>
 ```
 
-Запуск контейнера в интерактивном режиме.
+Запуск образа в интерактивном режиме.
 
 ```shell
 docker run --name <name container> -it <image_name> bash
@@ -38,13 +38,29 @@ docker rm <name container>
 docker ps
 ```
 
+Запуск образа в интерактивнои режиме 
+с открытым портом и с конфигурацией с переменными окружения
+```shell
+docker run --name <name container> --env-file <env filename> -p <inner port>:<outer port> -it <image_name> bash
+```
+
+Создание и запуск контейнера:
+```shell
+docker-compose up -d
+```
+
+Остановка и удаление контейнеров:
+```shell
+docker-compose down
+```
+
 Подключится к работающему контейнеру
 ```shell
 docker exec -it <container id> bash 
 ```
 
-Запуск контейнера в интерактивнои режиме 
-с открытым портом и с конфигурацией с переменными окружения
+Делает build для всех образов указанных в docker-compose.yml
 ```shell
-docker run --name <name container> --env-file <env filename> -p <inner port>:<outer port> -it <image_name> bash
+docker-compose build
 ```
+
