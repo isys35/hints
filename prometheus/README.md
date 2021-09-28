@@ -26,3 +26,19 @@ Gauge не показывает развитие метрики за перио�
 ```<metric name>{<label name>=<label value>, ...}```
 
 ```api_http_requests_total{method="POST", handler="/messages"}```
+
+
+<h3>Запуск в докере</h3>
+
+```shell
+docker run -p 9090:9090 prom/prometheus
+```
+
+
+```shell
+docker run -p 9090:9090 -v <path to prometheus.yml>:/etc/prometheus/prometheus.yml prom/prometheus
+```
+
+```shell
+docker run -p 9090:9090 -v <path to config>:/etc/prometheus prom/prometheus
+```

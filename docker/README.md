@@ -18,6 +18,12 @@ docker run <image_name>
 docker run --name <name container> -it <image_name> bash
 ```
 
+
+Построение контейнера из Dockerfile
+```shell
+docker build -t <name container> .
+```
+
 Остановка контейнера:
 ```shell
 docker stop <name container>
