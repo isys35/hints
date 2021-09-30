@@ -3,7 +3,7 @@
 <h3>git reset</h3>
 
 
-    <img src='hero.svg' alt='git reset'></img>
+   <img src='hero.svg' alt='git reset'></img>
 
 
   - Инструмент для отмены изменений.
