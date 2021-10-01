@@ -42,3 +42,21 @@ docker run -p 9090:9090 -v <path to prometheus.yml>:/etc/prometheus/prometheus.y
 ```shell
 docker run -p 9090:9090 -v <path to config>:/etc/prometheus prom/prometheus
 ```
+
+
+<h3>Удалить ненужные метрики</h3>
+Для начала нужно добавить аргумент запуска сервиса prometheus, которые включает API:
+
+```
+--web.enable-admin-api
+```
+
+Ссылка для удаления метрики:
+```
+POST /api/v1/admin/tsdb/delete_series
+```
+
+Пример:
+```shell
+curl -X POST -g 'http://localhost:9090/api/v1/admin/tsdb/delete_series?match[]=up&match[]=process_start_time_seconds{job="prometheus"}'
+```
