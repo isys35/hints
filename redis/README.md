@@ -1,6 +1,6 @@
 <h1>REDIS</h1>
 
-<h3>Путь до конфига</h3>:
+<h3>Путь до конфига:</h3>
 
 ```shell
 /etc/redis/redis.conf
