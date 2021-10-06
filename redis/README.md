@@ -27,6 +27,8 @@ systemctl restart redis
 ```shell
 scan <cursor> MATCH <match> COUNT <count>
 ```
+
+
 <b>DEL</b> - удаляет данные по ключу.
 ```shell
 del key
