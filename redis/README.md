@@ -7,9 +7,13 @@
 ```
 
 <h2>Установка</h2>
+
+
 ```shell
 sudo apt install redis-server
 ```
+
+
 Прописываем в конфиге supervised no на supervised sytemd и перезапускаем сервис.
 
 Строка для изменения:
