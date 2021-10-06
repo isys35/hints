@@ -24,6 +24,8 @@ systemctl restart redis
 
 <h2>Комманды:</h2>
 <b>SCAN</b> - выполняет итерацию набора ключей в текущей выбранной базе данных Redis.
+
+
 ```shell
 scan <cursor> MATCH <match> COUNT <count>
 ```
