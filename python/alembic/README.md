@@ -14,7 +14,7 @@ alembic init alembic
 
 Генерация миграций:
 ```shell
-alembic revision -c <path to alembic.ini> revision --message="Initial" --autogenerate
+alembic -c <path to alembic.ini> revision --message="Initial" --autogenerate
 ```
 
 Накатить миграции:
