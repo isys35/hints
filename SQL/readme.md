@@ -67,3 +67,26 @@ IS, а также круглые скобки для конкретизации.
     UNION [ALL]
     <запрос 2>
 ```
+
+
+<h2>INTERSECT и EXCEPT</h2>
+
+Пересечение и разность
+
+Пример: Найти корабли, которые присутствуют как в таблице Ships,
+так и в таблице Outcomes. 
+
+```sql
+    SELECT name FROM Ships
+    INTERSECT
+    SELECT ship FROM Outcomes;
+```
+
+Пример: Найти корабли из таблицы Outcomes,
+которые отсутствуют в таблице Ships. 
+
+```sql
+    SELECT ship FROM Outcomes
+    EXCEPT
+    SELECT name FROM Ships;
+```
