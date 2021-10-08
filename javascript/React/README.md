@@ -49,3 +49,8 @@ class Clock extends React.Component {
 <hr>
 
 
+<b>Компоненты жизненного цикла</b>
+
+<img src="lifecicle.png" alt="LifeCicle">
+
+
