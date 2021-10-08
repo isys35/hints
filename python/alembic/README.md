@@ -5,7 +5,7 @@
 alembic init alembic
 ```
 
-`alembic.ini` - файл с конфигурацией
+`alembic.ini` - файл с конфигурацией (здесь прописываются параметры для подключения к базе данных)
 
 `script.py.mako` - шаблон для новых миграций
 
@@ -14,7 +14,7 @@ alembic init alembic
 
 Генерация миграций:
 ```shell
-alembic revision -c <path to alembic.ini> revision --message="Initial" --autogenerate
+alembic -c <path to alembic.ini> revision --message="Initial" --autogenerate
 ```
 
 Накатить миграции:
