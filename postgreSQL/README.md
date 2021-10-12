@@ -40,3 +40,21 @@ sudo -u postgres psql
 ```shell
 psql -h localhost <имя бд> <имя роли>;
 ```
+
+
+<h3>Настройка удалённого подключения к PostgreSQL</h3>
+
+В файле конфигурации `postgresql.conf` находим и редактируем следующее:
+
+```.editorconfig
+listen_addresses = '*'
+```
+
+<i>по умолчанию, параметр закомментирован и настроен на прослушивание запросов только с локального сетевого интерфейса.</i>
+
+
+В файле конфигурации `pg_hba.conf` добавляем строку:
+
+```editorconfig
+host     all     all    <ip_address>/32     password
+```
