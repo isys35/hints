@@ -49,8 +49,32 @@ class Clock extends React.Component {
 <hr>
 
 
-<b>Компоненты жизненного цикла</b>
+<h3>Компоненты жизненного цикла</h3>
 
 <img src="lifecicle.png" alt="LifeCicle">
+
+
+
+<h3>Компоненты с задержкой</h3>
+
+Пример: 
+
+
+```javascript
+import React, { Suspense } from 'react';
+
+const OtherComponent = React.lazy(() => import('./OtherComponent'));
+
+function MyComponent() {
+  return (
+    <div>
+      <Suspense fallback={<div>Загрузка...</div>}>
+        <OtherComponent />
+      </Suspense>
+    </div>
+  );
+}
+```
+
 
 
