@@ -173,3 +173,15 @@ IS, а также круглые скобки для конкретизации.
     GROUP BY model
     HAVING AVG(price) < 800;
 ```
+
+
+<h2>Использование в запросе нескольких источников записей</h2>
+
+Пример: Вывести пары моделей, имеющих одинаковые цены:
+
+```sql
+    SELECT DISTINCT A.model AS model_1, B.model AS model_2
+    FROM PC AS A, PC B
+    WHERE A.price = B.price AND 
+     A.model < B.model;
+```
