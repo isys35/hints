@@ -10,4 +10,7 @@
     <li>
         <a href="git/README.md">Git</a>
     </li>
+    <li>
+        <a href="javascript/readme.md">Javascript</a>
+    </li>
 </ul>
