@@ -185,3 +185,21 @@ IS, а также круглые скобки для конкретизации.
     WHERE A.price = B.price AND 
      A.model < B.model;
 ```
+
+
+<h2>SOME(ANY) ALL</h2>
+
+`<выражение> <оператор сравнения> SOME | ANY (<подзапрос>)`
+
+`<выражение> <оператор сравнения> ALL (<подзапрос>)`
+
+
+Пример: Найти модели и цены портативных компьютеров, стоимость которых превышает стоимость любого ПК 
+
+```sql
+    SELECT DISTINCT model, price
+    FROM Laptop
+    WHERE price > ALL (SELECT price 
+     FROM PC
+     );
+```
