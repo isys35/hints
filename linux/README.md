@@ -1,20 +1,9 @@
 <h1>Linux</h1>
 
-<h3>Команды:</h3>
-<b>cp</b> - копирование файлов
-
-Аргументы:
-    <ul>
-        <li>`-f` - перезаписывать существующие файлы</li>
-        <li>`-i` - спрашивать, нужно ли перезаписывать существующие файлы</li>
-        <li>`-n` -  не перезаписывать существующие файлы</li>
-        <li>`-r` - копировать папку рекурсивно</li>
-    </ul>
-
-Пример:
-
-Копирование файлов с заменой:
-
-```shell
- cp -f ~/test ~/Documents/test
-```
+<ul>
+    <li><a href="shell/README.md">Комманды</a></li>
+    <li><a href="deb/README.md">deb</a></li>
+    <li><a href="nano/README.md">nano</a></li>
+    <li><a href="crontab/README.md">crontab</a></li>
+    <li><a href="systemd/README.md">systemd</a></li>
+</ul>
