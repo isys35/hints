@@ -9,4 +9,5 @@
     <li><a href="re/README.md">re</a></li>
     <li><a href="save_images/README.md">Сохранение изображений</a></li>
     <li><a href="sqlalchemy/README.md">SQLAlchemy</a></li>
+    <li><a href="pypi/README.md">PyPi</a></li>
 </ul>
