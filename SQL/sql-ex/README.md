@@ -225,3 +225,19 @@ SELECT speed, avg(price)
 GROUP BY speed;
 ```
 
+
+<h3>23</h3> <b>Найдите производителей, которые производили бы как ПК
+со скоростью не менее 750 МГц, так и ПК-блокноты со скоростью не менее 750 МГц.
+Вывести: Maker </b>
+
+```sql
+SELECT maker
+   FROM PC
+   JOIN Product ON PC.model = Product.model
+   WHERE speed >= '750'
+INTERSECT
+SELECT maker 
+   FROM Laptop
+   JOIN Product ON Laptop.model = Product.model
+   WHERE speed >= '750'
+```
