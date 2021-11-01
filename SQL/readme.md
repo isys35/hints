@@ -181,7 +181,7 @@ IS, а также круглые скобки для конкретизации.
 
 ```sql
     SELECT DISTINCT A.model AS model_1, B.model AS model_2
-    FROM PC AS A, PC B
+    FROM PC AS A, PC AS B
     WHERE A.price = B.price AND 
      A.model < B.model;
 ```
@@ -202,4 +202,19 @@ IS, а также круглые скобки для конкретизации.
     WHERE price > ALL (SELECT price 
      FROM PC
      );
+```
+
+<h2>INTERSECT, EXCEPT</h2>
+
+В результирующий набор попадают только те строки, которые присутствуют в обоих запросах (`INTERSECT`) или только те строки первого запроса, которые отсутствуют во втором (`EXCEPT`).
+
+Пример: Найти производителей, которые выпускают не менее двух моделей ПК и не менее двух моделей принтеров.
+
+
+```sql
+    SELECT maker FROM (
+    SELECT maker FROM Product WHERE type='PC'
+    INTERSECT ALL
+    SELECT maker FROM Product WHERE type ='Printer'
+    ) X GROUP BY maker HAVING COUNT(*)>1;
 ```
