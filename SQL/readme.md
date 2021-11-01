@@ -218,3 +218,48 @@ IS, а также круглые скобки для конкретизации.
     SELECT maker FROM Product WHERE type ='Printer'
     ) X GROUP BY maker HAVING COUNT(*)>1;
 ```
+
+
+<h2>CTE</h2>
+Общие табличные выражения
+
+Задача:
+
+Найти максимальную сумму прихода/расхода среди всех 4-х таблиц базы данных "Вторсырье", а также тип операции, дату и пункт приема, когда и где она была зафиксирована.
+
+Пример без CTE:
+
+```sql
+    SELECT inc AS max_sum, type, date, point 
+    FROM ( SELECT inc, 'inc' type, date, point 
+    FROM Income UNION ALL SELECT inc, 'inc' type, date, point 
+    FROM Income_o 
+    UNION ALL 
+    SELECT out, 'out' type, date, point 
+    FROM Outcome_o 
+    UNION ALL 
+    SELECT out, 'out' type, date, point FROM Outcome ) X 
+    WHERE inc >= ALL( SELECT inc FROM Income 
+           UNION ALL 
+           SELECT inc FROM Income_o 
+           UNION ALL SELECT out FROM Outcome_o 
+           UNION ALL SELECT out FROM Outcome );
+```
+
+
+Пример с CTE:
+```sql
+    WITH Inc_Out AS (  
+      SELECT inc, 'inc' type, date, point 
+      FROM Income 
+      UNION ALL 
+      SELECT inc, 'inc' type, date, point 
+      FROM Income_o 
+      UNION ALL 
+      SELECT out, 'out' type, date, point 
+      FROM Outcome_o 
+      UNION ALL 
+      SELECT out, 'out' type,date, point FROM Outcome ) 
+    SELECT inc AS max_sum, type, date, point 
+    FROM Inc_Out WHERE inc >= ALL ( SELECT inc FROM Inc_Out);
+```
