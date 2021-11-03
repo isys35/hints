@@ -1,5 +1,15 @@
+
 <h1>React</h1>
 <hr>
+
+<h3>Создание приложения</h3>
+
+```shell
+npx create-react-app my-app
+cd my-app
+npm start
+```
+
 <h3>Hello world:</h3>
 
 ```javascript
