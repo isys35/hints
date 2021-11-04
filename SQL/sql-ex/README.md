@@ -285,3 +285,13 @@ SELECT DISTINCT maker
                         )
                 )
 ```
+
+
+<h3>26</h3> <b>Найдите среднюю цену ПК и ПК-блокнотов, выпущенных производителем A (латинская буква).
+Вывести: одна общая средняя цена. </b>
+
+```sql
+select AVG(price) FROM (SELECT price FROM PC WHERE model IN (SELECT model from Product WHERE maker = 'A')
+    UNION ALL
+SELECT price FROM Laptop WHERE model IN (SELECT model from Product WHERE maker = 'A') ) as prices
+```
