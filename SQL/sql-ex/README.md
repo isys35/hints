@@ -253,3 +253,35 @@ WITH prices AS (SELECT model, price FROM PC
 SELECT model FROM prices WHERE price= (SELECT MAX(price) FROM prices);
 ```
 
+
+<h3>25</h3> <b>Найдите производителей принтеров, которые производят ПК с наименьшим объемом RAM и с самым быстрым процессором 
+среди всех ПК, имеющих наименьший объем RAM. Вывести: Maker </b>
+
+```sql
+SELECT DISTINCT maker
+    FROM Product 
+    WHERE type = 'printer' AND 
+          maker IN(SELECT maker 
+                   FROM Product 
+                   WHERE model IN(SELECT model 
+                                  FROM PC
+                                  WHERE speed = (SELECT MAX(speed)
+                                                 FROM (SELECT speed 
+                                                       FROM PC 
+                                                       WHERE ram=(SELECT MIN(ram)
+                                                                  FROM PC
+                                                                  )
+                                                       ) AS z4
+                                                 )
+                                  )
+                   ) 
+                        AND 
+          maker IN (SELECT maker 
+                    FROM Product 
+                    WHERE model  IN(SELECT model
+                                    FROM PC 
+                                    WHERE ram=(SELECT Min(ram) 
+                                               FROM PC)
+                        )
+                )
+```
