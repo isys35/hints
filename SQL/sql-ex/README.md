@@ -295,3 +295,20 @@ select AVG(price) FROM (SELECT price FROM PC WHERE model IN (SELECT model from P
     UNION ALL
 SELECT price FROM Laptop WHERE model IN (SELECT model from Product WHERE maker = 'A') ) as prices
 ```
+
+<h3>27</h3> <b>Найдите средний размер диска ПК каждого из тех производителей, которые выпускают и принтеры. 
+Вывести: maker, средний размер HD. </b>
+
+```sql
+SELECT maker, AVG(hd)
+FROM product t1 JOIN pc t2 ON t1.model=t2.model
+WHERE maker IN (
+SELECT maker
+FROM product
+WHERE type='printer'
+)
+GROUP BY maker
+```
+
+
+
