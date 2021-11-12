@@ -263,3 +263,27 @@ IS, а также круглые скобки для конкретизации.
     SELECT inc AS max_sum, type, date, point 
     FROM Inc_Out WHERE inc >= ALL ( SELECT inc FROM Inc_Out);
 ```
+
+
+<h2>CASE</h2>
+
+Оператор CASE в зависимости от указанных условий возвращает одно из множества возможных значений.
+
+
+Задача:
+
+Пусть требуется вывести список всех моделей ПК с указанием их цены. При этом если модель отсутствует в продаже (ее нет в таблице РС), 
+то вместо цены вывести текст «Нет в наличии».
+
+
+```sql
+    SELECT DISTINCT product.model, 
+     CASE 
+     WHEN price IS NULL 
+     THEN 'Нет в наличии' 
+     ELSE CAST(price AS CHAR(20)) 
+     END price 
+    FROM Product LEFT JOIN 
+     PC ON Product.model = PC.model
+    WHERE product.type = 'pc';
+```
