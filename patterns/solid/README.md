@@ -192,3 +192,8 @@ class Production:
         self.food.eat()  # uses only the common interface
 
 ```
+
+
+<h2>Прочие связанные принципы:</h2>
+<h3>Common Closure Principle (Принцип согласованного изменения)</h3>
+В один компонент должны объединяться классы, изменяющиеся по одним причинам.
