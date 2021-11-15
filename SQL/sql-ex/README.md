@@ -358,4 +358,34 @@ inc, out
  FROM Income_o as t1 FULL JOIN Outcome_o as t2 ON t1.point = t2.point AND t1.date = t2.date;
 ```
 
+<h3>30</h3> <b>В предположении, что приход и расход денег на каждом пункте приема фиксируется произвольное число раз 
+(первичным ключом в таблицах является столбец code), требуется получить таблицу, в которой каждому пункту за каждую дату 
+выполнения операций будет соответствовать одна строка.
+Вывод: point, date, суммарный расход пункта за день (out), суммарный приход пункта за день (inc). 
+Отсутствующие значения считать неопределенными (NULL).    </b>
 
+```sql
+SELECT CASE
+  WHEN t1.point IS NULL
+  THEN t2.point
+  ELSE t1.point
+  END point,
+ CASE
+  WHEN t1.date IS NULL
+  THEN t2.date
+  ELSE t1.date
+  END point, outcome, income FROM
+ (SELECT  point, date, SUM(inc) as income FROM Income 
+      GROUP BY point, date) t1 
+FULL JOIN 
+  (SELECT point, date, SUM(out) as outcome FROM Outcome 
+       GROUP BY point, date) t2 
+ON t1.point = t2.point AND t1.date = t2.date
+```
+
+<h3>31</h3> <b>Для классов кораблей, калибр орудий которых не менее 16 дюймов, укажите класс и страну.    </b>
+
+
+```sql
+SELECT class, country FROM Classes WHERE bore >= '16';
+```
