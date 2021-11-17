@@ -389,3 +389,32 @@ ON t1.point = t2.point AND t1.date = t2.date
 ```sql
 SELECT class, country FROM Classes WHERE bore >= '16';
 ```
+
+
+<h3>32</h3> <b>Одной из характеристик корабля является половина куба калибра его главных орудий (mw). С точностью до 2 десятичных знаков определите среднее значение mw для кораблей каждой страны, у которой есть корабли в базе данных.</b>
+
+
+```sql
+SELECT country, CONVERT(NUMERIC(10,2),AVG(bore*bore*bore/2)) weight
+FROM (SELECT country,bore,name
+    FROM Classes
+    RIGHT JOIN Ships ON Ships.class = Classes.class 
+    UNION
+    SELECT DISTINCT country, bore, ship
+    FROM Classes c 
+    LEFT JOIN Outcomes o ON o.ship = c.class
+    WHERE  NOT EXISTS(SELECT name
+    FROM Ships
+    WHERE name = o.ship) AND 
+    NOT (ship IS NULL)
+ ) as t
+GROUP BY country
+```
+
+
+<h3>33</h3> <b>Укажите корабли, потопленные в сражениях в Северной Атлантике (North Atlantic). Вывод: ship.</b>
+
+
+```sql
+SELECT ship FROM Outcomes WHERE result = 'sunk' AND battle='North Atlantic'
+```

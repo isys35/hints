@@ -287,3 +287,17 @@ IS, а также круглые скобки для конкретизации.
      PC ON Product.model = PC.model
     WHERE product.type = 'pc';
 ```
+
+
+<h2>CAST</h2>
+
+Преобразование типов
+
+```sql
+CAST(<выражение> AS <тип данных>)
+```
+
+```sql
+    SELECT Classes.country, CAST(AVG(POWER(bore, 3)/2) AS DEC(12,2)) as weight FROM Ships RIGHT JOIN Classes ON Ships.class = Classes.class GROUP BY Classes.country
+    
+```
