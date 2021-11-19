@@ -418,3 +418,25 @@ GROUP BY country
 ```sql
 SELECT ship FROM Outcomes WHERE result = 'sunk' AND battle='North Atlantic'
 ```
+
+
+<h3>34</h3> <b>По Вашингтонскому международному договору от начала 1922 г. запрещалось строить линейные корабли водоизмещением более 35 тыс.тонн. Укажите корабли, нарушившие этот договор (учитывать только корабли c известным годом спуска на воду). Вывести названия кораблей. </b>
+
+
+```sql
+SELECT name
+FROM Ships, Classes
+WHERE launched >=1922
+AND displacement >35000
+AND Classes.class = Ships.class
+AND type='bb'
+```
+
+<h3>35</h3> <b>В таблице Product найти модели, которые состоят только из цифр или только из латинских букв (A-Z, без учета регистра).
+Вывод: номер модели, тип модели.  </b>
+
+
+```sql
+SELECT model,type FROM Product
+WHERE  model NOT LIKE '%[^0-9]%' OR model NOT LIKE '%[^a-zA-Z]%'
+```
