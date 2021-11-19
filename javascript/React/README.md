@@ -88,3 +88,88 @@ function MyComponent() {
 
 
 
+<h3>Рефы</h3>
+Рефы дают возможность получить доступ к DOM-узлам или React-элементам, созданным в рендер-методе.
+
+```javascript
+class CustomTextInput extends React.Component {
+  constructor(props) {
+    super(props);
+    // создадим реф в поле `textInput` для хранения DOM-элемента
+    this.textInput = React.createRef();    this.focusTextInput = this.focusTextInput.bind(this);
+  }
+
+  focusTextInput() {
+    // Установим фокус на текстовое поле с помощью чистого DOM API
+    // Примечание: обращаемся к "current", чтобы получить DOM-узел
+    this.textInput.current.focus();  }
+
+  render() {
+    // описываем, что мы хотим связать реф <input>
+    // с `textInput` созданным в конструкторе
+    return (
+      <div>
+        <input
+          type="text"
+          ref={this.textInput} />        <input
+          type="button"
+          value="Фокус на текстовом поле"
+          onClick={this.focusTextInput}
+        />
+      </div>
+    );
+  }
+}
+```
+
+
+```javascript
+class CustomTextInput extends React.Component {
+  constructor(props) {
+    super(props);
+    // создадим реф в поле `textInput` для хранения DOM-элемента
+    this.textInput = React.createRef();    this.focusTextInput = this.focusTextInput.bind(this);
+  }
+
+  focusTextInput() {
+    // Установим фокус на текстовое поле с помощью чистого DOM API
+    // Примечание: обращаемся к "current", чтобы получить DOM-узел
+    this.textInput.current.focus();  }
+
+  render() {
+    // описываем, что мы хотим связать реф <input>
+    // с `textInput` созданным в конструкторе
+    return (
+      <div>
+        <input
+          type="text"
+          ref={this.textInput} />        <input
+          type="button"
+          value="Фокус на текстовом поле"
+          onClick={this.focusTextInput}
+        />
+      </div>
+    );
+  }
+}
+```
+
+```javascript
+function CustomTextInput(props) {
+  // textInput должна быть объявлена здесь, чтобы реф мог иметь к ней доступ  const textInput = useRef(null);
+  function handleClick() {
+    textInput.current.focus();  }
+
+  return (
+    <div>
+      <input
+        type="text"
+        ref={textInput} />      <input
+        type="button"
+        value="Фокус на поле для ввода текста"
+        onClick={handleClick}
+      />
+    </div>
+  );
+}
+```
