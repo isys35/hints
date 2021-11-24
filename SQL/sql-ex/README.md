@@ -440,3 +440,26 @@ AND type='bb'
 SELECT model,type FROM Product
 WHERE  model NOT LIKE '%[^0-9]%' OR model NOT LIKE '%[^a-zA-Z]%'
 ```
+
+
+<h3>36</h3> <b>Перечислите названия головных кораблей, имеющихся в базе данных (учесть корабли в Outcomes).  </b>
+
+
+```sql
+SELECT name FROM Ships WHERE name=class
+UNION 
+SELECT ship FROM Outcomes WHERE ship IN (SELECT class FROM Classes)
+```
+
+
+<h3>37</h3> <b>Найдите классы, в которые входит только один корабль из базы данных (учесть также корабли в Outcomes).  </b>
+
+
+```sql
+SELECT class FROM (
+ SELECT name, class FROM Ships 
+   UNION
+ SELECT ship as name, ship as class FROM Outcomes
+  WHERE ship IN (SELECT class FROM Classes)
+) t1 GROUP BY class HAVING COUNT(name)=1
+```
