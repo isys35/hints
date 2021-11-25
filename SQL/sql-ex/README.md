@@ -463,3 +463,25 @@ SELECT class FROM (
   WHERE ship IN (SELECT class FROM Classes)
 ) t1 GROUP BY class HAVING COUNT(name)=1
 ```
+
+
+<h3>38</h3> <b>Найдите страны, имевшие когда-либо классы обычных боевых кораблей ('bb') и имевшие когда-либо классы крейсеров ('bc'). </b>
+
+```sql
+SELECT DISTINCT country FROM 
+ Classes WHERE country IN 
+    (SELECT country FROM Classes WHERE type='bb') 
+           AND country IN
+    (SELECT country FROM Classes WHERE type='bc')
+```
+
+
+<h3>39</h3> <b>Найдите корабли, `сохранившиеся для будущих сражений`; т.е. выведенные из строя в одной битве (damaged), они участвовали в другой, произошедшей позже.  </b>
+
+```sql
+SELECT DISTINCT kk.ship FROM
+(SELECT ship,date from Outcomes oo, Battles bb WHERE oo.battle=bb.name) tt 
+INNER JOIN
+(SELECT ship,date as damagedate from Outcomes oo,Battles  bb WHERE result='damaged' AND oo.battle=bb.name) kk 
+ON tt.ship=kk.ship AND tt.date>kk.damagedate
+```
