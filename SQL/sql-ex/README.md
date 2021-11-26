@@ -505,11 +505,13 @@ SELECT DISTINCT t1.maker, t2.type FROM
 
 
 ```sql
-WITH t1 AS (SELECT model, price FROM PC
+WITH t1 AS (
+SELECT model, price FROM PC
 UNION
 SELECT model, price FROM Laptop
 UNION
-SELECT model, price FROM Printer)
+SELECT model, price FROM Printer
+)
 SELECT DISTINCT t2.maker,
 CASE 
  WHEN MAX(
