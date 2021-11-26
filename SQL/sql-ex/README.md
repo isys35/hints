@@ -485,3 +485,43 @@ INNER JOIN
 (SELECT ship,date as damagedate from Outcomes oo,Battles  bb WHERE result='damaged' AND oo.battle=bb.name) kk 
 ON tt.ship=kk.ship AND tt.date>kk.damagedate
 ```
+
+
+
+<h3>40</h3> <b>Найти производителей, которые выпускают более одной модели, при этом все выпускаемые производителем модели являются продуктами одного типа.
+Вывести: maker, type </b>
+
+```sql
+SELECT DISTINCT t1.maker, t2.type FROM 
+  (SELECT maker FROM Product 
+      GROUP BY maker 
+      HAVING COUNT(model)>1 AND COUNT(DISTINCT type) = 1) t1 
+ LEFT JOIN Product t2 ON t1.maker = t2.maker
+```
+<h3>41</h3> <b>Для каждого производителя, у которого присутствуют модели хотя бы в одной из таблиц PC, Laptop или Printer,
+определить максимальную цену на его продукцию.
+Вывод: имя производителя, если среди цен на продукцию данного производителя присутствует NULL, то выводить для этого производителя NULL,
+иначе максимальную цену. </b>
+
+
+```sql
+WITH t1 AS (SELECT model, price FROM PC
+UNION
+SELECT model, price FROM Laptop
+UNION
+SELECT model, price FROM Printer)
+SELECT DISTINCT t2.maker,
+CASE 
+ WHEN MAX(
+   CASE
+     WHEN t1.price IS NULL 
+     THEN 1
+     ELSE 0
+   END
+   ) = 0
+ THEN MAX(t1.price)
+ END
+FROM Product t2
+RIGHT JOIN t1 ON t2.model=t1.model
+GROUP BY t2.maker
+```
