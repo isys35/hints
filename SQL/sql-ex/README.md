@@ -527,3 +527,22 @@ FROM Product t2
 RIGHT JOIN t1 ON t2.model=t1.model
 GROUP BY t2.maker
 ```
+
+
+<h3>42</h3> <b>Найдите названия кораблей, потопленных в сражениях, и название сражения, в котором они были потоплены.</b>
+
+
+```sql
+SELECT ship, battle FROM Outcomes WHERE result='sunk'
+```
+
+
+<h3>43</h3> <b>Укажите сражения, которые произошли в годы, не совпадающие ни с одним из годов спуска кораблей на воду.</b>
+
+
+```sql
+SELECT name FROM Battles 
+ WHERE YEAR(date) NOT IN 
+   (SELECT YEAR(date) FROM Battles JOIN Ships ON YEAR(date)=launched)
+
+```
