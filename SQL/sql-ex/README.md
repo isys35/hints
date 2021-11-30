@@ -546,3 +546,24 @@ SELECT name FROM Battles
    (SELECT YEAR(date) FROM Battles JOIN Ships ON YEAR(date)=launched)
 
 ```
+
+
+<h3>44</h3> <b>Найдите названия всех кораблей в базе данных, начинающихся с буквы R.</b>
+
+```sql
+SELECT name FROM ships WHERE name LIKE 'R%'
+UNION 
+SELECT ship FROM Outcomes WHERE ship LIKE 'R%'
+```
+
+<h3>45</h3> <b>Найдите названия всех кораблей в базе данных, состоящие из трех и более слов (например, King George V).
+Считать, что слова в названиях разделяются единичными пробелами, и нет концевых пробелов. </b>
+
+
+```sql
+SELECT name FROM ships WHERE name LIKE '% % %'
+UNION 
+SELECT ship FROM Outcomes WHERE ship LIKE '% % %'
+```
+
+
