@@ -567,3 +567,46 @@ SELECT ship FROM Outcomes WHERE ship LIKE '% % %'
 ```
 
 
+<h3>46</h3> <b>Для каждого корабля, участвовавшего в сражении при Гвадалканале (Guadalcanal), вывести название,
+водоизмещение и число орудий. </b>
+
+```sql
+SELECT o.ship, displacement, numGuns FROM
+(SELECT name AS ship, displacement, numGuns
+FROM Ships AS s LEFT JOIN Classes AS c ON c.class=s.class
+UNION
+SELECT class AS ship, displacement, numGuns
+FROM Classes AS c) AS a
+RIGHT JOIN Outcomes AS o
+ON o.ship=a.ship
+WHERE battle = 'Guadalcanal'
+```
+
+
+<h3>47</h3> <b>Определить страны, которые потеряли в сражениях все свои корабли. </b>
+
+
+```sql
+WITH t1 AS (
+  SELECT c.country, s.name FROM Classes c 
+  INNER JOIN Ships s ON c.class = s.class
+ UNION 
+  SELECT c.country, o.ship FROM Outcomes o 
+  INNER JOIN Classes c ON o.ship=c.class 
+),
+t2 AS (
+    SELECT country, COUNT(*) as count_ships
+    FROM t1
+    LEFT JOIN Outcomes o ON t1.name=o.ship
+    WHERE result = 'sunk'
+    GROUP BY country
+),
+t3 AS (
+    SELECT country, COUNT(*) as count_ships
+    FROM t1
+    GROUP BY country
+)
+
+SELECT t3.country FROM t3 INNER JOIN t2 ON t3.country=t2.country
+WHERE t3.count_ships=t2.count_ships
+```
