@@ -3,4 +3,4 @@
 **Применимость:** когда нужно откладывать выполнение команд, выстраивать их в очереди, 
 а также хранить историю и делать отмену.
 
-<a href='https://github.com/isys35/hints/blob/master/patterns/codes/command.py'>Пример</a>
+<a href='https://github.com/isys35/hints/blob/master/patterns/other/codes/command.py'>Пример</a>
