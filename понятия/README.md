@@ -38,3 +38,49 @@
 сравнения введенного им пароля с паролем, сохраненным в базе данных.</li>
     <li><b>Авторизация</b> -  предоставление определенному лицу или группе лиц прав на выполнение определенных действий.</li>
 </ul>   
+
+
+
+<h1>Итератор и генератор</h1>
+
+<b>Итератор</b> представляет собой объект перечислитель, 
+который для данного объекта выдает следующий элемент, либо бросает исключение,
+если элементов больше нет. 
+
+
+<b>Генератор</b> это объект, который сразу при создании не вычисляет значения всех своих элементов. 
+
+```python
+a = (i**2 for i in range(1,5))
+```
+
+Генераторные выражения — это упрощённый вариант функций-генераторов, также создающих генераторы.
+
+```python
+def f_gen(m):
+    s = 1
+    for n in range(1,m):
+        yield n**2 + s
+        s += 1
+```
+
+
+Корутины потребляют данные, которые им передаются
+
+```python
+def grep(pattern):
+    print("Searching for",pattern)
+    while True:
+        line = (yield)
+        if pattern in line:
+            print(line)
+
+search = grep('coroutine')
+next(search)
+# Вывод: Searching for coroutine
+search.send("I love you")
+search.send("Don't you love me?")
+search.send("I love coroutines instead!")
+# Вывод: I love coroutines instead!
+search.close()
+```
