@@ -610,3 +610,16 @@ t3 AS (
 SELECT t3.country FROM t3 INNER JOIN t2 ON t3.country=t2.country
 WHERE t3.count_ships=t2.count_ships
 ```
+
+
+<h3>48</h3> <b>Найдите классы кораблей, в которых хотя бы один корабль был потоплен в сражении.   </b>
+
+
+```sql
+SELECT cl.class
+FROM Classes cl
+LEFT JOIN Ships s ON s.class = cl.class
+WHERE cl.class IN (SELECT ship FROM Outcomes WHERE result = 'sunk') OR
+s.name IN (SELECT ship FROM Outcomes WHERE result = 'sunk')
+GROUP BY cl.class
+```
