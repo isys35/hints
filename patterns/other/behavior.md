@@ -4,3 +4,11 @@
 а также хранить историю и делать отмену.
 
 <a href='https://github.com/isys35/hints/blob/master/patterns/other/codes/command.py'>Пример</a>
+
+
+
+<h2>Состояние</h2> - это поведенческий паттерн, позволяющий динамически изменять поведение объекта при смене его состояния.
+
+**Применимость:** используют в Python для превращения в объекты громоздких стейт-машин, построенных на операторах switch.
+
+<a href='https://github.com/isys35/hints/blob/master/patterns/other/codes/state.py'>Пример</a>
