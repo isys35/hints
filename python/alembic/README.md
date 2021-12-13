@@ -24,5 +24,5 @@ alembic upgrade head
 
 Откатить миграции:
 ```shell
-alembic downgrade
+alembic downgrade -1
 ```
