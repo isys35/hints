@@ -623,3 +623,19 @@ WHERE cl.class IN (SELECT ship FROM Outcomes WHERE result = 'sunk') OR
 s.name IN (SELECT ship FROM Outcomes WHERE result = 'sunk')
 GROUP BY cl.class
 ```
+
+
+<h3>49</h3> <b>Найдите названия кораблей с орудиями калибра 16 дюймов (учесть корабли из таблицы Outcomes).  </b>
+
+```sql
+SELECT ship FROM Outcomes INNER JOIN Classes ON Outcomes.ship = Classes.class 
+WHERE bore = '16'
+UNION
+SELECT name FROM Ships LEFT JOIN Classes ON Ships.class = Classes.class WHERE bore = '16'
+```
+
+<h3>50</h3> <b>Найдите сражения, в которых участвовали корабли класса Kongo из таблицы Ships.  </b>
+
+```sql
+SELECT DISTINCT battle FROM Outcomes INNER JOIN Ships ON Outcomes.ship = Ships.name WHERE Ships.class = 'Kongo'
+```
