@@ -639,3 +639,38 @@ SELECT name FROM Ships LEFT JOIN Classes ON Ships.class = Classes.class WHERE bo
 ```sql
 SELECT DISTINCT battle FROM Outcomes INNER JOIN Ships ON Outcomes.ship = Ships.name WHERE Ships.class = 'Kongo'
 ```
+
+
+<h3>51</h3> <b>Найдите названия кораблей, имеющих наибольшее число орудий среди всех имеющихся кораблей такого же водоизмещения (учесть корабли из таблицы Outcomes).   </b>
+
+```sql
+WITH cte AS (SELECT A.name ,
+                    C.numGuns ,
+                    C.displacement
+             FROM  (SELECT S.name,
+                           S.class
+                           FROM dbo.Ships AS S
+                     UNION
+                     SELECT O.ship ,
+                           O.ship
+                     FROM dbo.Outcomes AS O
+                      ) AS A
+             JOIN dbo.Classes AS C ON A.class = C.class
+             )
+SELECT  cte.name FROM cte JOIN 
+   ( SELECT cte.displacement ,
+            MAX(cte.numGuns) AS MaxNumGun
+            FROM cte
+            GROUP BY cte.displacement
+     ) AS M ON cte.displacement = M.displacement AND cte.numguns = M.MaxNumGun
+```
+
+<h3>52</h3> <b>Определить названия всех кораблей из таблицы Ships, которые могут быть линейным японским кораблем,
+имеющим число главных орудий не менее девяти, калибр орудий менее 19 дюймов и водоизмещение не более 65 тыс.тонн    </b>
+
+
+```sql
+SELECT DISTINCT name FROM Ships LEFT JOIN Classes ON Ships.class=Classes.class
+WHERE type='bb' AND country = 'Japan' AND (numGuns >= 9 OR numGuns IS NULL) AND (bore < 19 OR bore IS NULL) AND (displacement <= 65000 OR displacement IS NULL)
+
+```
