@@ -674,3 +674,13 @@ SELECT DISTINCT name FROM Ships LEFT JOIN Classes ON Ships.class=Classes.class
 WHERE type='bb' AND country = 'Japan' AND (numGuns >= 9 OR numGuns IS NULL) AND (bore < 19 OR bore IS NULL) AND (displacement <= 65000 OR displacement IS NULL)
 
 ```
+
+
+
+<h3>53</h3> <b>Определите среднее число орудий для классов линейных кораблей.
+Получить результат с точностью до 2-х десятичных знаков.  </b>
+
+
+```sql
+SELECT CAST(ROUND(AVG(numGuns), 2) AS DECIMAL(10,2)) FROM (SELECT CAST(numGuns AS DECIMAL(10, 2)) as numGuns FROM Classes WHERE type='bb') as t1
+```
