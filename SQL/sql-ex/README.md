@@ -684,3 +684,24 @@ WHERE type='bb' AND country = 'Japan' AND (numGuns >= 9 OR numGuns IS NULL) AND 
 ```sql
 SELECT CAST(ROUND(AVG(numGuns), 2) AS DECIMAL(10,2)) FROM (SELECT CAST(numGuns AS DECIMAL(10, 2)) as numGuns FROM Classes WHERE type='bb') as t1
 ```
+
+<h3>54</h3> <b>С точностью до 2-х десятичных знаков определите среднее число орудий всех линейных кораблей (учесть корабли из таблицы Outcomes).  </b>
+
+```sql
+WITH cte AS (SELECT numGuns  FROM Ships LEFT JOIN Classes ON Classes.class = Ships .class WHERE type = 'bb'
+UNION ALL
+SELECT numGuns FROM (
+    SELECT DISTINCT ship, numGuns FROM Outcomes 
+      INNER JOIN Classes ON  Outcomes.ship = Classes.class 
+      WHERE type = 'bb' AND ship NOT IN (SELECT name FROM Ships)
+     ) as t1
+)
+SELECT CAST(ROUND(AVG(numGuns), 2) AS DECIMAL(10,2)) FROM (SELECT CAST(numGuns AS DECIMAL(10, 2)) as numGuns FROM cte) as t1
+```
+
+<h3>55</h3> <b>Для каждого класса определите год, когда был спущен на воду первый корабль этого класса. Если год спуска на воду головного корабля неизвестен, определите минимальный год спуска на воду кораблей этого класса. Вывести: класс, год. </b>
+
+
+```sql
+SELECT Classes.class, MIN(Ships.launched) FROM Classes LEFT JOIN Ships ON Classes.class = Ships.class GROUP BY Classes.class
+```
