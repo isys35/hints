@@ -705,3 +705,49 @@ SELECT CAST(ROUND(AVG(numGuns), 2) AS DECIMAL(10,2)) FROM (SELECT CAST(numGuns A
 ```sql
 SELECT Classes.class, MIN(Ships.launched) FROM Classes LEFT JOIN Ships ON Classes.class = Ships.class GROUP BY Classes.class
 ```
+
+
+<h3>56</h3> <b>Для каждого класса определите число кораблей этого класса, потопленных в сражениях. Вывести: класс и число потопленных кораблей. </b>
+
+```sql
+SELECT Classes.class, COUNT(result) FROM Classes LEFT JOIN  
+(SELECT 
+ CASE
+  WHEN class is NULL
+  THEN ship
+  ELSE class
+ END class,
+ CASE
+  WHEN result='sunk'
+  THEN result
+  ELSE NULL
+ END result
+ FROM Outcomes LEFT JOIN Ships ON Outcomes.ship = Ships.name) as t1 
+ON Classes.class = t1.class GROUP BY Classes.class
+```
+
+<h3>57</h3> <b>Для классов, имеющих потери в виде потопленных кораблей и не менее 3 кораблей в базе данных, вывести имя класса и число потопленных кораблей. </b>
+
+```sql
+SELECT Classes.class, COUNT(result) FROM Classes LEFT JOIN  
+(SELECT 
+ CASE
+  WHEN class is NULL
+  THEN ship
+  ELSE class
+ END class,
+ CASE
+  WHEN result='sunk'
+  THEN result
+  ELSE NULL
+ END result
+ FROM Outcomes LEFT JOIN Ships ON Outcomes.ship = Ships.name) as t1 
+ON Classes.class = t1.class WHERE result = 'sunk' AND Classes.class IN 
+ (SELECT class FROM (SELECT class FROM Ships
+    UNION ALL
+    SELECT DISTINCT ship FROM Outcomes 
+    INNER JOIN Classes ON Outcomes.ship = Classes.class 
+    WHERE ship NOT IN (SELECT name FROM Ships)) as t3
+    GROUP BY class HAVING COUNT(class)>2)
+GROUP BY Classes.class
+```
