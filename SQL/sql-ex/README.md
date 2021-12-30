@@ -751,3 +751,27 @@ ON Classes.class = t1.class WHERE result = 'sunk' AND Classes.class IN
     GROUP BY class HAVING COUNT(class)>2)
 GROUP BY Classes.class
 ```
+
+
+<h3>58</h3> <b>Для каждого типа продукции и каждого производителя из таблицы Product c точностью до двух десятичных знаков найти процентное отношение числа моделей данного типа данного производителя к общему числу моделей этого производителя.
+Вывод: maker, type, процентное отношение числа моделей данного типа к общему числу моделей производителя</b>
+
+```sql
+SELECT m, t,
+CAST(100.0*cc/cc1 AS NUMERIC(5,2))
+from
+(SELECT m, t, sum(c) cc from
+(SELECT distinct maker m, 'PC' t, 0 c from product
+union all
+SELECT distinct maker, 'Laptop', 0 from product
+union all
+SELECT distinct maker, 'Printer', 0 from product
+union all
+SELECT maker, type, count(*) from product
+group by maker, type) as tt
+group by m, t) tt1
+JOIN (
+SELECT maker, count(*) cc1 from product group by maker
+) tt2
+ON m=maker
+```
