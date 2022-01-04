@@ -775,3 +775,32 @@ SELECT maker, count(*) cc1 from product group by maker
 ) tt2
 ON m=maker
 ```
+
+
+<h3>59</h3> <b>Посчитать остаток денежных средств на каждом пункте приема для базы данных с отчетностью не чаще одного раза в день. Вывод: пункт, остаток.</b>
+
+```sql
+SELECT t1.point,(COALESCE(t1.val_inc, 0) - COALESCE(t2.val_out, 0)) 
+FROM (
+    SELECT point, SUM(inc) as val_inc FROM Income_o GROUP BY point) as t1 
+    FULL JOIN 
+    (SELECT point, SUM(out) as val_out FROM Outcome_o GROUP BY point) as t2 
+        ON t1.point = t2.point
+```
+
+
+<h3>60</h3> <b>Посчитать остаток денежных средств на начало дня 15/04/01 на каждом пункте приема для базы данных с отчетностью не чаще одного раза в день. Вывод: пункт, остаток.
+Замечание. Не учитывать пункты, информации о которых нет до указанной даты. </b>
+
+```sql
+WITH flag_points AS (SELECT DISTINCT point FROM (SELECT point, date FROM Outcome_o
+UNION ALL 
+SELECT point, date FROM Income_o) as t1
+WHERE date<'2001-04-15')
+SELECT t1.point, (COALESCE(t1.val_inc, 0) - COALESCE(t2.val_out, 0)) 
+FROM
+(SELECT point, SUM(inc) as val_inc FROM Income_o WHERE date<'2001-04-15' AND point IN (SELECT * FROM flag_points) GROUP BY point) as t1
+FULL JOIN 
+(SELECT point, SUM(out) as val_out FROM Outcome_o WHERE date<'2001-04-15' AND point IN (SELECT * FROM flag_points) GROUP BY point) as t2
+ON t1.point = t2.point
+```
