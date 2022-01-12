@@ -44,6 +44,20 @@ Outcome(code, point, date, out)
 Здесь также значения столбца date не содержат времени.
 
 
+<h2>Аэрофлот: </h2>
+
+Схема БД состоит из четырех отношений:
+Company (ID_comp, name)
+Trip(trip_no, ID_comp, plane, town_from, town_to, time_out, time_in)
+Passenger(ID_psg, name)
+Pass_in_trip(trip_no, date, ID_psg, place)
+Таблица Company содержит идентификатор и название компании, осуществляющей перевозку пассажиров. Таблица Trip содержит информацию о рейсах: номер рейса, идентификатор компании, тип самолета, город отправления, город прибытия, время отправления и время прибытия. Таблица Passenger содержит идентификатор и имя пассажира. Таблица Pass_in_trip содержит информацию о полетах: номер рейса, дата вылета (день), идентификатор пассажира и место, на котором он сидел во время полета. При этом следует иметь в виду, что
+- рейсы выполняются ежедневно, а длительность полета любого рейса менее суток; town_from <> town_to;
+- время и дата учитывается относительно одного часового пояса;
+- время отправления и прибытия указывается с точностью до минуты;
+- среди пассажиров могут быть однофамильцы (одинаковые значения поля name, например, Bruce Willis);
+- номер места в салоне – это число с буквой; число определяет номер ряда, буква (a – d) – место в ряду слева направо в алфавитном порядке;
+- связи и ограничения показаны на схеме данных.
 
 <hr>
 
@@ -804,3 +818,37 @@ FULL JOIN
 (SELECT point, SUM(out) as val_out FROM Outcome_o WHERE date<'2001-04-15' AND point IN (SELECT * FROM flag_points) GROUP BY point) as t2
 ON t1.point = t2.point
 ```
+
+
+<h3>61</h3> <b>Посчитать остаток денежных средств на всех пунктах приема для базы данных с отчетностью не чаще одного раза в день. </b>
+
+
+```sql
+SELECT SUM(s) FROM (
+ SELECT t1.point,(COALESCE(t1.val_inc, 0) - COALESCE(t2.val_out, 0)) as s
+ FROM (
+  SELECT point, SUM(inc) as val_inc FROM Income_o GROUP BY point) as t1        FULL JOIN (
+  SELECT point, SUM(out) as val_out FROM Outcome_o GROUP BY point) as t2    ON t1.point = t2.point) as t3
+```
+
+
+<h3>62</h3> <b>Посчитать остаток денежных средств на всех пунктах приема на начало дня 15/04/01 для базы данных с отчетностью не чаще одного раза в день.</b>
+
+```sql
+WITH flag_points AS (SELECT DISTINCT point FROM (SELECT point, date FROM Outcome_o
+UNION ALL 
+SELECT point, date FROM Income_o) as t1
+WHERE date<'2001-04-15')
+SELECT (COALESCE(t1.val_inc, 0) - COALESCE(t2.val_out, 0)) 
+FROM
+(SELECT SUM(inc) as val_inc FROM Income_o WHERE date<'2001-04-15' AND point IN (SELECT * FROM flag_points)) as t1,
+(SELECT SUM(out) as val_out FROM Outcome_o WHERE date<'2001-04-15' AND point IN (SELECT * FROM flag_points)) as t2
+```
+
+
+<h3>63</h3> <b>Определить имена разных пассажиров, когда-либо летевших на одном и том же месте более одного раза. </b>
+
+```sql
+SELECT name FROM Passenger WHERE ID_psg IN (SELECT ID_psg FROM Pass_in_trip GROUP BY ID_psg, place HAVING COUNT(*) > 1);
+```
+
