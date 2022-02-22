@@ -26,6 +26,17 @@ def bubble_sort(A):
                 A[k], A[k + 1] = A[k + 1], A[k]
 
 
+def counting_sort(A):
+    """Сортировка подсчётом"""
+    scope = max(A) + 1
+    C = [0] * scope
+    for x in A:
+        C[x] += 1
+    A[:] = []
+    for number in range(scope):
+        A += [number] * C[number]
+
+
 def test_sort(sort_algorithm):
     print("Тестируем: ", sort_algorithm.__doc__)
     print("testcase #1: ", end="")
@@ -47,7 +58,9 @@ def test_sort(sort_algorithm):
     print("Ok" if A == A_sorted else "Fail")
 
 
+
 if __name__ == '__main__':
     test_sort(insert_sort)
     test_sort(choise_sort)
     test_sort(bubble_sort)
+    test_sort(counting_sort)
